@@ -482,6 +482,22 @@ h4 {
     border-color: var(--accent-blue);
 }
 
+.type-btn {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.type-btn.active {
+    background: var(--accent-blue);
+    color: white;
+}
+
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;

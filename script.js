@@ -38,6 +38,7 @@ const SUBJECT_WEIGHTAGE = {
 
 // State Management
 let state = {
+    userName: "Naveenkumar A",
     syllabus: {},
     pyq: {},
     tests: [],
@@ -51,6 +52,12 @@ function initApp() {
     updateCountdown();
     setMotivation();
     document.getElementById('today-date-display').innerText = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+    // Set Profile Name
+    if (state.userName) {
+        document.getElementById('user-name-display').innerText = state.userName;
+        document.getElementById('profile-img').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(state.userName)}&background=0D8ABC&color=fff`;
+    }
 
     // Initial Renders
     renderSyllabus();
@@ -162,8 +169,10 @@ function renderSyllabus() {
                         <input type="checkbox" id="topic_${subj}_${idx}" ${t.done ? 'checked' : ''} 
                                onchange="toggleTopic('${subj}', ${idx})">
                         <label for="topic_${subj}_${idx}">${t.text}</label>
+                        <i class="fas fa-trash" style="color: var(--danger); cursor: pointer; opacity: 0.5; padding: 4px;" onclick="deleteTopic('${subj}', ${idx})" title="Delete Topic" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.5'"></i>
                     </div>
                 `).join('')}
+                <button class="primary-btn" onclick="addTopic('${subj}')" style="margin-top: 10px; width: 100%; font-size: 0.85rem; padding: 6px;"><i class="fas fa-plus"></i> Add Custom Topic</button>
             </div>
         `;
         container.appendChild(card);
@@ -175,11 +184,43 @@ function toggleTopic(subj, idx) {
 
     // Update local UI immediately
     const topics = state.syllabus[subj];
-    const percent = Math.round((topics.filter(t => t.done).length / topics.length) * 100);
+    const percent = topics.length > 0 ? Math.round((topics.filter(t => t.done).length / topics.length) * 100) : 0;
     document.getElementById(`prog-${subj.replace(/\s+/g, '')}`).innerText = `${percent}%`;
 
     saveState();
     showToast();
+}
+
+function addTopic(subj) {
+    event.stopPropagation(); // prevent collapsing accordion
+    const text = prompt(`Add a custom topic to ${subj}:`);
+    if (text && text.trim() !== '') {
+        state.syllabus[subj].push({ text: text.trim(), done: false });
+        saveState();
+        renderSyllabus();
+        showToast("Topic added!");
+    }
+}
+
+function deleteTopic(subj, idx) {
+    event.stopPropagation(); // prevent collapsing accordion
+    if (confirm(`Are you sure you want to delete the topic "${state.syllabus[subj][idx].text}"?`)) {
+        state.syllabus[subj].splice(idx, 1);
+        saveState();
+        renderSyllabus();
+        showToast("Topic deleted!");
+    }
+}
+
+function editName() {
+    const newName = prompt("Enter your name:", state.userName);
+    if (newName && newName.trim() !== '') {
+        state.userName = newName.trim();
+        document.getElementById('user-name-display').innerText = state.userName;
+        document.getElementById('profile-img').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(state.userName)}&background=0D8ABC&color=fff`;
+        saveState();
+        showToast("Profile name updated!");
+    }
 }
 
 function renderPYQ() {
@@ -211,44 +252,126 @@ function togglePYQ(subj, idx) {
     showToast();
 }
 
+function loadPDF(event) {
+    const file = event.target.files[0];
+    if (file && file.type === "application/pdf") {
+        const fileURL = URL.createObjectURL(file);
+        document.getElementById('pdf-placeholder').style.display = 'none';
+        document.getElementById('pdf-frame').style.display = 'block';
+        document.getElementById('pdf-frame').src = fileURL;
+    } else {
+        alert("Please ensure the selected file is a valid PDF.");
+    }
+}
+
+function setTestFormType(type) {
+    document.getElementById('t-form-type').value = type;
+    document.getElementById('btn-type-schedule').classList.remove('active');
+    document.getElementById('btn-type-completed').classList.remove('active');
+    document.getElementById('btn-type-' + type).classList.add('active');
+
+    const marksSec = document.getElementById('marks-section');
+    const dateLabel = document.getElementById('t-date-label');
+    const btn = document.getElementById('t-submit-btn');
+
+    if (type === 'completed') {
+        marksSec.style.display = 'block';
+        dateLabel.innerText = "Date Taken";
+        btn.innerText = "Save Result";
+        document.getElementById('t-scored').required = true;
+        document.getElementById('t-total').required = true;
+        document.getElementById('t-analysis').required = true;
+    } else {
+        marksSec.style.display = 'none';
+        dateLabel.innerText = "Scheduled Date";
+        btn.innerText = "Save to Schedule";
+        document.getElementById('t-scored').required = false;
+        document.getElementById('t-total').required = false;
+        document.getElementById('t-analysis').required = false;
+    }
+}
+
+function convertScheduledToCompleted(id) {
+    const test = state.tests.find(t => t.id === id);
+    if (test) {
+        setTestFormType('completed');
+        document.getElementById('t-editing-id').value = id;
+        document.getElementById('t-provider').value = test.provider;
+        document.getElementById('t-topic').value = test.topic;
+        document.getElementById('t-date').value = test.date;
+        document.getElementById('t-scored').focus();
+        showToast("Enter your marks for the scheduled test.");
+    }
+}
+
 function handleTestSubmit(e) {
     e.preventDefault();
+    const type = document.getElementById('t-form-type').value;
+    const isEditing = document.getElementById('t-editing-id').value;
+
     const test = {
-        id: Date.now(),
-        date: new Date().toISOString().split('T')[0],
+        id: isEditing ? Number(isEditing) : Date.now(),
+        isCompleted: (type === 'completed'),
+        date: document.getElementById('t-date').value,
         provider: document.getElementById('t-provider').value,
         topic: document.getElementById('t-topic').value,
-        scored: parseFloat(document.getElementById('t-scored').value),
-        total: parseFloat(document.getElementById('t-total').value),
-        analysis: document.getElementById('t-analysis').value,
+        scored: type === 'completed' ? parseFloat(document.getElementById('t-scored').value) : null,
+        total: type === 'completed' ? parseFloat(document.getElementById('t-total').value) : null,
+        analysis: type === 'completed' ? document.getElementById('t-analysis').value : null,
     };
+
+    if (isEditing) {
+        state.tests = state.tests.filter(t => t.id !== test.id);
+        document.getElementById('t-editing-id').value = '';
+    }
 
     state.tests.unshift(test); // add to top
     saveState();
     renderTests();
     e.target.reset();
-    showToast("Test logged successfully!");
+    showToast(type === 'schedule' ? "Test Added to Schedule!" : "Test Result Logged!");
 }
 
 function renderTests() {
     const list = document.getElementById('tests-list');
-    if (state.tests.length === 0) {
-        list.innerHTML = `<p style="color:var(--text-muted);">No tests logged yet. Start attempting mocks!</p>`;
-        return;
+    const schList = document.getElementById('tests-scheduled-list');
+
+    // Sort tests so newest/future dates are logical, but simple filter is enough for history
+    const completed = state.tests.filter(t => t.isCompleted !== false); // legacy tests are undefined, treat as true
+    const scheduled = state.tests.filter(t => t.isCompleted === false);
+
+    if (completed.length === 0) {
+        list.innerHTML = `<p style="color:var(--text-muted);">No completed tests recorded yet.</p>`;
+    } else {
+        list.innerHTML = completed.map(t => `
+            <div class="test-result-card glass">
+                <div class="tr-header">
+                    <div>
+                        <h4>${t.topic}</h4>
+                        <span class="tr-meta">${t.provider} • taken ${new Date(t.date).toLocaleDateString()}</span>
+                    </div>
+                    <div class="tr-score">${t.scored} / ${t.total}</div>
+                </div>
+                <div class="tr-analysis">" ${t.analysis} "</div>
+            </div>
+        `).join('');
     }
 
-    list.innerHTML = state.tests.map(t => `
-        <div class="test-result-card glass">
-            <div class="tr-header">
-                <div>
-                    <h4>${t.topic}</h4>
-                    <span class="tr-meta">${t.provider} • ${new Date(t.date).toLocaleDateString()}</span>
+    if (scheduled.length === 0) {
+        schList.innerHTML = `<p style="color:var(--text-muted);">No tests scheduled.</p>`;
+    } else {
+        schList.innerHTML = scheduled.map(t => `
+            <div class="test-result-card glass" style="border-left-color: var(--accent-orange);">
+                <div class="tr-header">
+                    <div>
+                        <h4>${t.topic}</h4>
+                        <span class="tr-meta">${t.provider} • Scheduled for ${new Date(t.date).toLocaleDateString()}</span>
+                    </div>
+                    <button onclick="convertScheduledToCompleted(${t.id})" class="primary-btn" style="width: auto; padding: 6px 12px; font-size: 0.8rem;">Log Result</button>
                 </div>
-                <div class="tr-score">${t.scored} / ${t.total}</div>
             </div>
-            <div class="tr-analysis">" ${t.analysis} "</div>
-        </div>
-    `).join('');
+        `).join('');
+    }
 }
 
 function handleHoursSubmit(e) {
@@ -293,11 +416,30 @@ function renderHoursChart() {
 }
 
 function updateDashboardStats() {
-    // Calc Syllabus %
+    // Calc Syllabus % and Detailed Subject Breakdown
     let sylDone = 0; let sylTotal = 0;
-    for (const t of Object.values(state.syllabus)) {
-        sylTotal += t.length;
-        sylDone += t.filter(x => x.done).length;
+    const breakdownContainer = document.getElementById('dash-subject-breakdown');
+    breakdownContainer.innerHTML = '';
+
+    for (const [subj, topics] of Object.entries(state.syllabus)) {
+        const total = topics.length;
+        const done = topics.filter(x => x.done).length;
+        sylTotal += total;
+        sylDone += done;
+
+        // Detailed subject breakdown for Dashboard
+        const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+        breakdownContainer.innerHTML += `
+            <div style="background: rgba(255,255,255,0.03); padding: 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05);">
+                <div style="display:flex; justify-content:space-between; margin-bottom: 5px; font-size: 0.9rem;">
+                    <span>${subj}</span>
+                    <span style="color:var(--text-muted);">${pct}%</span>
+                </div>
+                <div class="progress-bar" style="margin:0; height: 5px; background: rgba(0,0,0,0.5);">
+                    <div class="fill" style="width: ${pct}%;"></div>
+                </div>
+            </div>
+        `;
     }
     const sylPct = sylTotal > 0 ? Math.round((sylDone / sylTotal) * 100) : 0;
     document.getElementById('dash-syl-fill').style.width = `${sylPct}%`;
@@ -313,8 +455,21 @@ function updateDashboardStats() {
     document.getElementById('dash-pyq-fill').style.width = `${pyqPct}%`;
     document.getElementById('dash-pyq-text').innerText = `${pyqPct}%`;
 
-    // Tests
-    document.getElementById('dash-tests-text').innerText = state.tests.length;
+    // Tests & Detailed Upcoming Tests
+    document.getElementById('dash-tests-text').innerText = state.tests.filter(t => t.isCompleted !== false).length;
+
+    const upcomingContainer = document.getElementById('dash-upcoming-tests');
+    const scheduled = state.tests.filter(t => t.isCompleted === false);
+    if (scheduled.length === 0) {
+        upcomingContainer.innerHTML = `<p style="color:var(--text-muted); font-size: 0.9rem;">No upcoming tests scheduled. Keep grinding!</p>`;
+    } else {
+        upcomingContainer.innerHTML = scheduled.map(t => `
+            <div style="background: rgba(249,115,22,0.1); border-left: 3px solid var(--accent-orange); padding: 10px; border-radius: 4px;">
+                <h5 style="margin:0; font-size:0.95rem;">${t.topic}</h5>
+                <span style="font-size:0.8rem; color:var(--text-muted);">${t.provider} • Date: ${new Date(t.date).toLocaleDateString()}</span>
+            </div>
+        `).join('');
+    }
 
     // Hours this week
     let weekHrs = 0;
