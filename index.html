@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GATE 2027 ECE - Supreme Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&family=Outfit:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+
+<body>
+    <div class="app-container">
+
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <i class="fas fa-microchip neon-blue"></i>
+                <h2>GATE ECE <span class="accent-text">'27</span></h2>
+            </div>
+            <nav class="nav-menu">
+                <button class="nav-btn active" data-target="view-dashboard"><i class="fas fa-home"></i>
+                    Dashboard</button>
+                <button class="nav-btn" data-target="view-syllabus"><i class="fas fa-book-open"></i> Syllabus
+                    Tracker</button>
+                <button class="nav-btn" data-target="view-pyq"><i class="fas fa-history"></i> PYQ Tracker</button>
+                <button class="nav-btn" data-target="view-tests"><i class="fas fa-chart-line"></i> Test Series
+                    (ACE)</button>
+                <button class="nav-btn" data-target="view-hours"><i class="fas fa-clock"></i> Study Hours</button>
+            </nav>
+            <div class="countdown-widget glass">
+                <p>Target: Feb 6, 2027</p>
+                <div class="days-circle">
+                    <h3 id="days-left-count">--</h3>
+                    <span>Days Left</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+            <header class="top-header">
+                <div>
+                    <h1 id="page-title">Dashboard</h1>
+                    <p class="subtitle" id="page-subtitle">Track your progress and stay motivated.</p>
+                </div>
+                <div class="today-date glass">
+                    <i class="fas fa-calendar-alt"></i> <span id="today-date-display">June 30, 2026</span>
+                </div>
+            </header>
+
+            <div class="view-container">
+
+                <!-- ================= VIEW: DASHBOARD ================= -->
+                <section id="view-dashboard" class="view active">
+                    <!-- Motivation Banner carousel injected via JS -->
+                    <div class="motivation-banner" id="motivation-banner">
+                        <div class="banner-overlay"></div>
+                        <div class="quote-content">
+                            <h2 id="motivational-quote">"Dream Big. Work Hard. The IITs are waiting."</h2>
+                            <p id="motivational-inst">IIT Madras Administration Block</p>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="dash-card glass">
+                            <div class="card-header">
+                                <i class="fas fa-book-open neon-blue"></i>
+                                <h4>Overall Syllabus</h4>
+                            </div>
+                            <div class="progress-wrap">
+                                <div class="progress-bar">
+                                    <div class="fill" id="dash-syl-fill"></div>
+                                </div>
+                                <span id="dash-syl-text" class="progress-percent">0%</span>
+                            </div>
+                        </div>
+
+                        <div class="dash-card glass">
+                            <div class="card-header">
+                                <i class="fas fa-history neon-orange"></i>
+                                <h4>Overall PYQs</h4>
+                            </div>
+                            <div class="progress-wrap">
+                                <div class="progress-bar">
+                                    <div class="fill orange-fill" id="dash-pyq-fill"></div>
+                                </div>
+                                <span id="dash-pyq-text" class="progress-percent">0%</span>
+                            </div>
+                        </div>
+
+                        <div class="dash-card glass">
+                            <div class="card-header">
+                                <i class="fas fa-stopwatch neon-blue"></i>
+                                <h4>Hours This Week</h4>
+                            </div>
+                            <div class="stat-number"><span id="dash-hours-text">0</span> hr</div>
+                        </div>
+
+                        <div class="dash-card glass">
+                            <div class="card-header">
+                                <i class="fas fa-file-signature neon-orange"></i>
+                                <h4>Tests Attempted</h4>
+                            </div>
+                            <div class="stat-number"><span id="dash-tests-text">0</span></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================= VIEW: SYLLABUS TRACKER ================= -->
+                <section id="view-syllabus" class="view">
+                    <div class="section-intro glass">
+                        <p>Check off topics as you complete them (Theory + Basic Qs). The progress updates
+                            automatically.</p>
+                    </div>
+                    <div id="syllabus-container" class="accordion-container">
+                        <!-- Rendered via JS -->
+                    </div>
+                </section>
+
+                <!-- ================= VIEW: PYQ TRACKER ================= -->
+                <section id="view-pyq" class="view">
+                    <div class="section-intro glass">
+                        <p>After completing a subject's theory, solve Previous Year Questions in these buckets.</p>
+                    </div>
+                    <div id="pyq-container" class="grid-container">
+                        <!-- Rendered via JS -->
+                    </div>
+                </section>
+
+                <!-- ================= VIEW: TEST SERIES ================= -->
+                <section id="view-tests" class="view">
+                    <div class="test-layout">
+                        <div class="test-form glass">
+                            <h3>Log a New Test Result</h3>
+                            <form id="test-form">
+                                <div class="form-group">
+                                    <label>Test Series Name (e.g., ACE, MadeEasy)</label>
+                                    <input type="text" id="t-provider" required placeholder="ACE Academy">
+                                </div>
+                                <div class="form-group">
+                                    <label>Test Topic / Subject</label>
+                                    <input type="text" id="t-topic" required placeholder="Signals & Systems - Part 1">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Marks Scored</label>
+                                        <input type="number" id="t-scored" step="0.5" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Total Marks</label>
+                                        <input type="number" id="t-total" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Performance Analysis / Mistakes to revise</label>
+                                    <textarea id="t-analysis" rows="3" required
+                                        placeholder="Silly mistake in Fourier Transform scaling property..."></textarea>
+                                </div>
+                                <button type="submit" class="primary-btn">Save Test Result</button>
+                            </form>
+                        </div>
+
+                        <div class="test-history">
+                            <h3>Your Test History</h3>
+                            <div id="tests-list" class="tests-list">
+                                <!-- Renders via JS -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================= VIEW: STUDY HOURS ================= -->
+                <section id="view-hours" class="view">
+                    <div class="hours-layout">
+                        <div class="hours-logger glass">
+                            <h3>Log Today's Hours</h3>
+                            <form id="hours-form">
+                                <div class="form-group">
+                                    <label>Date</label>
+                                    <input type="date" id="h-date" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Hours Studied</label>
+                                    <input type="number" id="h-amount" step="0.5" min="0" max="24" required
+                                        placeholder="e.g. 6.5">
+                                </div>
+                                <button type="submit" class="primary-btn">Log Hours</button>
+                            </form>
+                        </div>
+                        <div class="hours-chart glass">
+                            <h3>Recent Activity</h3>
+                            <div class="chart-container" id="hours-chart">
+                                <!-- Bars rendered via JS -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast">Saved Successfully!</div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
