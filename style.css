@@ -117,6 +117,15 @@ h1,h2,h3,h4{font-family:var(--font-heading);}
 .target-add-input{flex:1;background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.1);padding:7px 11px;color:var(--text-main);border-radius:7px;font-family:inherit;font-size:0.88rem;}
 .target-add-input:focus{outline:none;border-color:var(--accent-blue);}
 
+/* ── STATUS BAR (TOP DASHBOARD) ── */
+.status-bar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding:12px 18px;margin-bottom:20px;}
+.status-today{font-size:0.9rem;font-weight:600;}
+.status-pills{display:flex;gap:16px;flex-wrap:wrap;}
+.status-pill{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.03);padding:8px 14px;border-radius:10px;border:1px solid var(--card-border);cursor:pointer;transition:transform 0.15s,background 0.15s;}
+.status-pill:hover{transform:translateY(-2px);background:rgba(255,255,255,0.06);}
+.pill-label{font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;font-weight:700;}
+.pill-val{font-size:0.9rem;font-weight:700;margin-top:2px;display:flex;align-items:center;gap:6px;}
+
 /* ── ALERTS ── */
 .weak-alert{padding:10px 14px;margin-bottom:12px;border-left:4px solid var(--accent-orange);display:flex;align-items:center;gap:10px;background:rgba(249,115,22,0.07)!important;font-size:0.85rem;}
 .weak-alert i{color:var(--accent-orange);font-size:1rem;flex-shrink:0;}
