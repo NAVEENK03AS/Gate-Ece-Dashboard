@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GATE 2027 ECE - Supreme Tracker</title>
+    <meta name="description" content="GATE ECE 2027 preparation dashboard with syllabus tracker, previous year trends, and study hours.">
     <link rel="stylesheet" href="style.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&family=Outfit:wght@300;400;600;700&display=swap"
@@ -35,10 +36,11 @@
             <nav class="nav-menu">
                 <button class="nav-btn active" data-target="view-dashboard"><i class="fas fa-home"></i>
                     Dashboard</button>
-                <button class="nav-btn" data-target="view-syllabus"><i class="fas fa-book-open"></i> Syllabus
-                    Tracker</button>
+                <button class="nav-btn" data-target="view-syllabus-static"><i class="fas fa-book-open"></i> Syllabus</button>
+                <button class="nav-btn" data-target="view-preparation"><i class="fas fa-tasks"></i> Preparation</button>
+                <button class="nav-btn" data-target="view-trends"><i class="fas fa-chart-bar"></i> Previous Year Trends</button>
                 <button class="nav-btn" data-target="view-pyq"><i class="fas fa-history"></i> PYQ Tracker</button>
-                <button class="nav-btn" data-target="view-tests"><i class="fas fa-chart-line"></i> Test Series</button>
+                <button class="nav-btn" data-target="view-tests"><i class="fas fa-file-signature"></i> Test Series</button>
                 <button class="nav-btn" data-target="view-hours"><i class="fas fa-clock"></i> Study Hours</button>
             </nav>
 
@@ -79,8 +81,8 @@
                     <!-- Stats Row -->
                     <div class="dashboard-grid">
                         <div class="dash-card glass">
-                            <div class="card-header"><i class="fas fa-book-open neon-blue"></i>
-                                <h4>Syllabus</h4>
+                            <div class="card-header"><i class="fas fa-tasks neon-blue"></i>
+                                <h4>Preparation</h4>
                             </div>
                             <div class="progress-wrap">
                                 <div class="progress-bar">
@@ -128,7 +130,7 @@
 
                     <!-- IIT / IISc / PSU Inspiration Photo Grid -->
                     <div class="inst-section">
-                        <h3 class="inst-title"><i class="fas fa-university neon-orange"></i> Your Dream Institutions
+                        <h3 class="inst-title"><i class="fas fa-university neon-orange"></i> Dream Institutions & PSUs
                         </h3>
                         <div class="inst-grid" id="inst-grid">
                             <!-- Rendered via JS -->
@@ -136,8 +138,34 @@
                     </div>
                 </section>
 
-                <!-- ===== VIEW: SYLLABUS TRACKER ===== -->
-                <section id="view-syllabus" class="view">
+                <!-- ===== VIEW: SYLLABUS (STATIC) ===== -->
+                <section id="view-syllabus-static" class="view">
+                    <div class="glass" style="padding:18px 24px; margin-bottom:22px; border-left:4px solid #3b82f6;">
+                        <h3 style="margin-bottom:8px;"><i class="fas fa-graduation-cap neon-blue"></i> GATE 2026 ECE Official Syllabus</h3>
+                        <p style="color:var(--text-muted); font-size:0.9rem;">As per IIT Guwahati — GATE 2026. Click any subject to expand its topics.</p>
+                        <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:12px;">
+                            <span style="background:rgba(59,130,246,0.15);color:#60a5fa;padding:4px 12px;border-radius:20px;font-size:0.82rem;"><i class="fas fa-book"></i> 9 Subjects</span>
+                            <span style="background:rgba(245,158,11,0.15);color:#fbbf24;padding:4px 12px;border-radius:20px;font-size:0.82rem;"><i class="fas fa-star"></i> 100 Marks Total</span>
+                            <span style="background:rgba(16,185,129,0.15);color:#34d399;padding:4px 12px;border-radius:20px;font-size:0.82rem;"><i class="fas fa-link"></i> source: gate2026.iitg.ac.in</span>
+                        </div>
+                    </div>
+                    <div id="syllabus-static-container" class="accordion-container"></div>
+                </section>
+
+                <!-- ===== VIEW: PREPARATION TRACKER ===== -->
+                <section id="view-preparation" class="view">
+                    <div class="glass"
+                        style="padding: 18px 24px; margin-bottom: 22px; text-align: center; border-left:4px solid var(--success);">
+                        <h3 style="margin-bottom: 12px; font-size:1.05rem;">Overall Preparation Progress</h3>
+                        <div class="progress-bar"
+                            style="height: 14px; margin-bottom: 10px; background:rgba(255,255,255,0.08);">
+                            <div class="fill" id="prep-page-overall-fill" style="width: 0%; background:var(--success);">
+                            </div>
+                        </div>
+                        <div><span id="prep-page-overall-text" style="font-weight: bold; font-size: 1.6rem;">0%</span>
+                            <span style="color:var(--text-muted); font-size:0.9rem; margin-left:8px;">Syllabus Completed</span></div>
+                    </div>
+
                     <div class="pdf-box glass">
                         <div class="pdf-header">
                             <h3><i class="fas fa-file-pdf neon-orange"></i> Reference PDF Viewer</h3>
@@ -162,10 +190,53 @@
                     </div>
 
                     <div class="section-intro glass">
-                        <p>✅ Check off topics as you complete them. Use <b>+</b> to add custom topics and 🗑 to remove
-                            any.</p>
+                        <p>✅ Check off topics as you complete them. Subject % and overall % update automatically. Use <b>+</b> to add custom topics.</p>
                     </div>
                     <div id="syllabus-container" class="accordion-container"></div>
+                </section>
+
+                <!-- ===== VIEW: PREVIOUS YEAR TRENDS ===== -->
+                <section id="view-trends" class="view">
+                    <div class="glass" style="padding: 20px; margin-bottom: 24px;">
+                        <h3 style="margin-bottom:15px; font-size:1.1rem;"><i class="fas fa-chart-bar neon-orange"></i>
+                            Subject-wise Marks Distribution (Previous Years)</h3>
+                        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:16px;">Year-wise marks from GATE EC papers. You can type your own observed marks in the "My Notes" column.</p>
+                        <div style="overflow-x:auto;">
+                            <table style="width:100%; text-align:left; border-collapse: collapse; min-width:700px;">
+                                <thead>
+                                    <tr style="border-bottom: 2px solid var(--card-border); background:rgba(0,0,0,0.2);">
+                                        <th style="padding: 12px; font-weight:600;">Subject</th>
+                                        <th style="padding: 12px; font-weight:600; text-align:center;">2021</th>
+                                        <th style="padding: 12px; font-weight:600; text-align:center;">2022</th>
+                                        <th style="padding: 12px; font-weight:600; text-align:center;">2023</th>
+                                        <th style="padding: 12px; font-weight:600; text-align:center;">2024</th>
+                                        <th style="padding: 12px; font-weight:600; text-align:center;">Approx. Total</th>
+                                        <th style="padding: 12px; font-weight:600; text-align:center;">My Notes <i class="fas fa-edit" style="font-size:0.75rem; color:var(--text-muted);"></i></th>
+                                        <th style="padding: 12px; font-weight:600; text-align:center;">Priority</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="trends-tbody">
+                                    <!-- JS outputs table -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="glass" style="padding: 22px;">
+                        <h3 style="margin-bottom:12px; font-size:1.1rem;"><i class="fas fa-image neon-blue"></i> Upload
+                            Trends Document / Image</h3>
+                        <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:15px;">Upload a screenshot or
+                            image of exact previous year trends to keep it saved for quick reference.</p>
+
+                        <label for="trend-img-upload" class="primary-btn"
+                            style="cursor:pointer; display:inline-block; width:auto; margin-bottom:20px;"><i
+                                class="fas fa-upload"></i> Select Image</label>
+                        <input type="file" id="trend-img-upload" accept="image/*" onchange="loadTrendImage(event)"
+                            style="display:none;">
+
+                        <img id="trend-img-preview"
+                            style="width:100%; border-radius: 10px; border:2px solid var(--card-border); display:none; max-height:700px; object-fit:contain; background:#000;">
+                    </div>
                 </section>
 
                 <!-- ===== VIEW: PYQ TRACKER ===== -->
