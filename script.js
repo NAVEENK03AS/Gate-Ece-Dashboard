@@ -45,7 +45,8 @@ let _motivationIdx = Math.floor((new Date() - new Date(new Date().getFullYear(),
 const GATE_SYLLABUS = {
     "General Aptitude":{color:"#f59e0b",marks:15,sections:{"Verbal Aptitude":["Basic English grammar: tenses, articles, adjectives, prepositions, conjunctions, verb-noun agreement, and other parts of speech","Basic vocabulary: words, idioms, and phrases in context","Reading and comprehension","Narrative sequencing"],"Quantitative Aptitude":["Data interpretation: data graphs (bar graphs, pie charts, and other graphs representing data), 2- and 3-dimensional plots, maps, and tables","Numerical computation and estimation: ratios, percentages, powers, exponents and logarithms, permutations and combinations, and series","Mensuration and geometry","Elementary statistics and probability"],"Analytical Aptitude":["Logic: deduction and induction","Analogy","Numerical relations and reasoning"],"Spatial Aptitude":["Transformation of shapes: translation, rotation, scaling, mirroring, assembling, and grouping","Paper folding, cutting, and patterns in 2 and 3 dimensions"]}},
     "Engineering Mathematics":{color:"#3b82f6",marks:13,sections:{"Linear Algebra":["Vector space, basis, linear dependence and independence, matrix algebra","Eigenvalues and eigenvectors","Rank, solution of linear equations – existence and uniqueness"],"Calculus":["Mean value theorems, theorems of integral calculus","Evaluation of definite and improper integrals","Partial derivatives, maxima and minima, multiple integrals","Line, surface and volume integrals","Taylor series"],"Differential Equations":["First order equations (linear and nonlinear)","Higher order linear differential equations with constant coefficients","Method of variation of parameters","Cauchy's and Euler's equations","Initial and boundary value problems","Partial differential equations and separation of variables method"],"Vector Analysis":["Vectors in plane and space, vector operations","Gradient, divergence and curl","Gauss's, Green's and Stoke's theorems"],"Complex Analysis":["Analytic functions, Cauchy's integral theorem, Cauchy's integral formula","Sequences and series, convergence tests","Laurent series, residue theorem"],"Probability and Statistics":["Mean, median, mode and standard deviation","Combinatorial probability","Probability distribution functions: binomial, Poisson, exponential and normal","Joint and conditional probability","Correlation and regression"]}},
-    "Networks, Signals and Systems":{color:"#8b5cf6",marks:11,sections:{"Circuit Analysis":["Node and mesh analysis","Superposition, Thevenin's theorem, Norton's theorem, reciprocity"],"Sinusoidal Steady State Analysis":["Phasors, complex power, maximum power transfer"],"Time and Frequency Domain Analysis":["RL, RC and RLC circuits","Solution of network equations using Laplace transform"],"Two-Port Networks":["Linear 2-port network parameters","Wye-delta transformation"],"Continuous-time Signals":["Fourier series and Fourier transform","Sampling theorem and applications"],"Discrete-time Signals":["DTFT, DFT, z-transform","Discrete-time processing of continuous-time signals"],"LTI Systems":["Definition and properties, causality, stability","Impulse response, convolution, poles and zeros","Parallel and cascade structure","Frequency response, group delay, phase delay","Digital filter design techniques"]}},
+    "Network Theory":{color:"#8b5cf6",marks:6,sections:{"Circuit Analysis":["Node and mesh analysis","Superposition, Thevenin's theorem, Norton's theorem, reciprocity"],"Sinusoidal Steady State Analysis":["Phasors, complex power, maximum power transfer"],"Time and Frequency Domain Analysis":["RL, RC and RLC circuits","Solution of network equations using Laplace transform"],"Two-Port Networks":["Linear 2-port network parameters","Wye-delta transformation"]}},
+    "Signals and Systems":{color:"#a855f7",marks:7,sections:{"Continuous-time Signals":["Fourier series and Fourier transform","Sampling theorem and applications"],"Discrete-time Signals":["DTFT, DFT, z-transform","Discrete-time processing of continuous-time signals"],"LTI Systems":["Definition and properties, causality, stability","Impulse response, convolution, poles and zeros","Parallel and cascade structure","Frequency response, group delay, phase delay","Digital filter design techniques"]}},
     "Electronic Devices":{color:"#ec4899",marks:10,sections:{"Semiconductor Physics":["Energy bands in intrinsic and extrinsic semiconductors","Equilibrium carrier concentration","Direct and indirect band-gap semiconductors"],"Carrier Transport":["Drift and diffusion current, mobility, resistivity","Excess carriers, recombination and generation"],"P-N Junction":["Ideal current-voltage characteristics","Capacitance: diffusion and depletion"],"BJT":["Physics of transistor operation","Current-voltage characteristics, common-emitter configuration"],"MOSFET":["Physics of transistor operation","Current-voltage characteristics","Enhancement and depletion modes"],"MOS Capacitor & Small Signal Models":["Threshold voltage","Small signal models of diodes, BJT and MOSFET"],"Other Devices":["Junction field effect transistors (JFET)","LED, photo-diode and solar cell (Optoelectronics)"]}},
     "Analog Circuits":{color:"#14b8a6",marks:10,sections:{"Small Signal Models":["Small signal equivalent circuits of diodes, BJTs and MOSFETs"],"Diode Circuits":["Simple diode circuits: clipping, clamping, rectifiers"],"Biasing":["Biasing and bias stability of transistor and FET amplifiers"],"Amplifiers":["Single-stage and multi-stage amplifiers","Differential amplifiers","Operational amplifiers","Feedback amplifiers","Power amplifiers","Frequency response of amplifiers"],"Op-Amp Circuits":["Active filters","Sinusoidal oscillators: Wein-bridge and phase shift, criterion for oscillation","Function generators, wave-shaping circuits","Current-to-voltage and voltage-to-current converters","Precision rectifiers"]}},
     "Digital Circuits":{color:"#f97316",marks:9,sections:{"Number Systems":["Number representations: binary, integer, and floating-point numbers"],"Combinatorial Circuits":["Boolean algebra, minimization of functions using Boolean algebra and Karnaugh map","Logic gates, arithmetic circuits, code converters","Multiplexers, decoders, and PLAs"],"Sequential Circuits":["Latches and flip-flops, counters, shift-registers"],"Data Converters":["Sample and hold circuits, ADCs and DACs"],"Semiconductor Memories":["ROM, SRAM, DRAM"],"Computer Organization":["Machine instructions and addressing modes","ALU, data-path and control unit","Instruction pipelining"]}},
@@ -56,21 +57,22 @@ const GATE_SYLLABUS = {
 
 // ─── PY WEIGHTAGE + 2025 data ─────────────────────────────────────────────────
 const WEIGHTAGE = {
-    "General Aptitude":               {marks:15, years:{"2021":15,"2022":15,"2023":15,"2024":15,"2025":15}},
-    "Engineering Mathematics":        {marks:13, years:{"2021":13,"2022":12,"2023":13,"2024":13,"2025":13}},
-    "Communications":                 {marks:12, years:{"2021":11,"2022":13,"2023":12,"2024":12,"2025":12}},
-    "Networks, Signals and Systems":  {marks:11, years:{"2021":10,"2022":11,"2023":11,"2024":11,"2025":10}},
-    "Electronic Devices":             {marks:10, years:{"2021":10,"2022":10,"2023":10,"2024":11,"2025":10}},
-    "Analog Circuits":                {marks:10, years:{"2021":10,"2022":10,"2023":10,"2024": 9,"2025":11}},
-    "Electromagnetics":               {marks: 9, years:{"2021": 9,"2022": 9,"2023": 8,"2024": 9,"2025": 9}},
-    "Digital Circuits":               {marks: 9, years:{"2021": 9,"2022": 9,"2023": 9,"2024": 8,"2025": 7}},
-    "Control Systems":                {marks: 8, years:{"2021": 8,"2022": 7,"2023": 8,"2024": 8,"2025": 8}},
+    "General Aptitude":               {marks:15, years:{"2021":15,"2022":15,"2023":15,"2024":15,"2025":15,"2026":15}},
+    "Engineering Mathematics":        {marks:13, years:{"2021":13,"2022":12,"2023":13,"2024":13,"2025":13,"2026":13}},
+    "Communications":                 {marks:12, years:{"2021":11,"2022":13,"2023":12,"2024":12,"2025":12,"2026":12}},
+    "Network Theory":                 {marks: 6, years:{"2021": 5,"2022": 5,"2023": 6,"2024": 5,"2025": 6,"2026": 6}},
+    "Signals and Systems":            {marks: 7, years:{"2021": 5,"2022": 6,"2023": 5,"2024": 6,"2025": 7,"2026": 7}},
+    "Electronic Devices":             {marks:10, years:{"2021":10,"2022":10,"2023":10,"2024":11,"2025":10,"2026":11}},
+    "Analog Circuits":                {marks:10, years:{"2021":10,"2022":10,"2023":10,"2024": 9,"2025":11,"2026":10}},
+    "Electromagnetics":               {marks: 9, years:{"2021": 9,"2022": 9,"2023": 8,"2024": 9,"2025": 9,"2026": 8}},
+    "Digital Circuits":               {marks: 9, years:{"2021": 9,"2022": 9,"2023": 9,"2024": 8,"2025": 7,"2026": 9}},
+    "Control Systems":                {marks: 8, years:{"2021": 8,"2022": 7,"2023": 8,"2024": 8,"2025": 8,"2026": 9}},
 };
 
 // ─── TOPIC-WISE PYQ COUNT (2015-2025) ────────────────────────────────────────
 const PYQ_TOPIC_COUNTS = [
-    {topic:"Fourier Transform & Series",          subj:"Networks, Signals and Systems",   count:18},
-    {topic:"Laplace Transform",                   subj:"Networks, Signals and Systems",   count:15},
+    {topic:"Fourier Transform & Series",          subj:"Signals and Systems",             count:18},
+    {topic:"Laplace Transform",                   subj:"Network Theory",                  count:15},
     {topic:"MOSFET Characteristics",              subj:"Electronic Devices",              count:14},
     {topic:"Op-Amp Circuits",                     subj:"Analog Circuits",                 count:13},
     {topic:"Nyquist / Bode Stability",            subj:"Control Systems",                 count:12},
@@ -79,18 +81,18 @@ const PYQ_TOPIC_COUNTS = [
     {topic:"BJT Amplifiers & Biasing",            subj:"Analog Circuits",                 count:11},
     {topic:"Transmission Lines & Smith Chart",    subj:"Electromagnetics",                count:11},
     {topic:"Eigenvalues & Linear Algebra",        subj:"Engineering Mathematics",         count:10},
-    {topic:"Z-Transform & DFT",                   subj:"Networks, Signals and Systems",   count:10},
+    {topic:"Z-Transform & DFT",                   subj:"Signals and Systems",             count:10},
     {topic:"Amplitude Modulation (AM/FM)",        subj:"Communications",                  count:10},
     {topic:"Karnaugh Map & Boolean Algebra",      subj:"Digital Circuits",                count:10},
     {topic:"P-N Junction & Diode",                subj:"Electronic Devices",              count: 9},
     {topic:"Maxwell's Equations & EM Waves",      subj:"Electromagnetics",                count: 9},
-    {topic:"Network Theorems (Thevenin/Norton)",  subj:"Networks, Signals and Systems",   count: 9},
+    {topic:"Network Theorems (Thevenin/Norton)",  subj:"Network Theory",                  count: 9},
     {topic:"State Space Representation",          subj:"Control Systems",                 count: 9},
     {topic:"ADC / DAC",                           subj:"Digital Circuits",                count: 8},
     {topic:"Flip-Flops & Sequential Circuits",    subj:"Digital Circuits",                count: 8},
     {topic:"Channel Capacity & Shannon",          subj:"Communications",                  count: 8},
-    {topic:"Differential Equations",             subj:"Engineering Mathematics",          count: 7},
-    {topic:"Convolution & LTI Systems",           subj:"Networks, Signals and Systems",   count: 7},
+    {topic:"Differential Equations",              subj:"Engineering Mathematics",         count: 7},
+    {topic:"Convolution & LTI Systems",           subj:"Signals and Systems",             count: 7},
     {topic:"Antenna Arrays & VSWR",               subj:"Electromagnetics",                count: 7},
     {topic:"JFET & LED",                          subj:"Electronic Devices",              count: 6},
     {topic:"Hamming Codes & Error Correction",    subj:"Communications",                  count: 6},
@@ -155,7 +157,8 @@ const ACHIEVEMENTS=[
 const DEFAULT_REFS={
     "General Aptitude":[{title:"Quantitative Aptitude — RS Aggarwal",url:"https://www.youtube.com/results?search_query=gate+quantitative+aptitude+rs+aggarwal"},{title:"GATE GA Playlist — Made Easy",url:"https://www.youtube.com/results?search_query=gate+general+aptitude+made+easy"}],
     "Engineering Mathematics":[{title:"NPTEL Engineering Mathematics",url:"https://nptel.ac.in/courses/111/108/111108099/"},{title:"Krishna Nayak — Gate Math Playlist",url:"https://www.youtube.com/results?search_query=gate+engineering+mathematics+playlist"}],
-    "Networks, Signals and Systems":[{title:"Signals & Systems — Oppenheim (MIT OCW)",url:"https://ocw.mit.edu/courses/res-6-007-signals-and-systems-spring-2011/"},{title:"NPTEL Networks & Systems",url:"https://nptel.ac.in/courses/117/104/117104064/"}],
+    "Network Theory":[{title:"NPTEL Network Analysis",url:"https://nptel.ac.in/courses/108/105/108105159/"},{title:"GATE Network Theory Playlist",url:"https://www.youtube.com/results?search_query=gate+network+theory+playlist"}],
+    "Signals and Systems":[{title:"Signals & Systems — Oppenheim (MIT OCW)",url:"https://ocw.mit.edu/courses/res-6-007-signals-and-systems-spring-2011/"},{title:"NPTEL Signals and Systems",url:"https://nptel.ac.in/courses/108/106/108106151/"}],
     "Electronic Devices":[{title:"Semiconductor Physics — NPTEL",url:"https://nptel.ac.in/courses/117/105/117105080/"},{title:"IIT Lectures — Electronic Devices",url:"https://www.youtube.com/results?search_query=electronic+devices+GATE+IIT+lecture"}],
     "Analog Circuits":[{title:"Analog Electronics — NPTEL Nandita Das",url:"https://nptel.ac.in/courses/117/104/117104141/"},{title:"Op-Amp Circuits — Khan Academy",url:"https://www.khanacademy.org/science/electrical-engineering/ee-circuit-analysis-topic"}],
     "Digital Circuits":[{title:"Digital Electronics — GATE Lectures",url:"https://www.youtube.com/results?search_query=digital+circuits+GATE+lecture+playlist"},{title:"Neso Academy — Digital Circuits",url:"https://www.youtube.com/@nesoacademy"}],
@@ -222,6 +225,13 @@ const INIT_SYLLABUS=(()=>{
 function loadState(){
     const saved=localStorage.getItem('gateECEState_v6');
     if(saved){try{state=Object.assign(state,JSON.parse(saved));}catch(e){}}
+    if(state.syllabus["Networks, Signals and Systems"]){
+        delete state.syllabus["Networks, Signals and Systems"];
+        delete state.pyq["Networks, Signals and Systems"];
+        delete state.bookmarks["Networks, Signals and Systems"];
+        delete state.formulas["Networks, Signals and Systems"];
+        delete state.subjectTargetDates["Networks, Signals and Systems"];
+    }
     for(const[subj,topics]of Object.entries(INIT_SYLLABUS)){
         if(!state.syllabus[subj]) state.syllabus[subj]=topics.map(t=>({...t}));
         else state.syllabus[subj]=state.syllabus[subj].map(t=>({note:'',completedDate:null,...t}));
@@ -249,6 +259,17 @@ function applyTheme(){
 function renderProfile(){
     document.getElementById('user-name-display').innerText=state.userName;
     document.getElementById('profile-img').src=`https://ui-avatars.com/api/?name=${encodeURIComponent(state.userName)}&background=0D8ABC&color=fff&size=120`;
+    
+    // Time-synced motivation
+    const hour = new Date().getHours();
+    let greeting = "";
+    if (hour < 12) greeting = "Good Morning ☀️ Let's conquer today!";
+    else if (hour < 17) greeting = "Good Afternoon 🚀 Keep the momentum!";
+    else if (hour < 21) greeting = "Good Evening 🌙 Stay focused!";
+    else greeting = "Good Night 🦉 The late night grind!";
+    
+    const greetEl = document.getElementById('greeting-display');
+    if(greetEl) greetEl.innerText = greeting;
 }
 function openNameModal(){document.getElementById('name-input').value=state.userName;document.getElementById('name-modal').style.display='flex';}
 function closeNameModal(){document.getElementById('name-modal').style.display='none';}
@@ -261,7 +282,12 @@ function renderCountdown(){
     document.getElementById('days-left-count').innerText=days;
     const fmtd=exam.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
     document.getElementById('exam-date-label').innerText=`GATE — ${fmtd}`;
-    document.getElementById('exam-countdown-mini').innerText=`📅 ${days} days to exam`;
+    
+    const topLabel = document.getElementById('exam-date-top-label');
+    if(topLabel) topLabel.innerText = `(${fmtd}) •`;
+    const topCount = document.getElementById('exam-countdown-top');
+    if(topCount) topCount.innerText = `${days} Days Left`;
+    
     renderGoalPill();
 }
 function editExamDate(){
@@ -269,15 +295,17 @@ function editExamDate(){
     if(d&&/^\d{4}-\d{2}-\d{2}$/.test(d)){state.examDate=d;saveState();renderCountdown();showToast('Date updated!');}
 }
 function renderGoalPill(){
-    const pill=document.getElementById('goal-days-pill');
     const gl=document.getElementById('goal-label');
     const gd=document.getElementById('goal-days-left');
-    if(!state.userGoal){pill.style.display='none';return;}
+    if(!state.userGoal){
+        if(gl) gl.innerText='Click to set goal';
+        if(gd) gd.innerText='';
+        return;
+    }
     const goalDate=new Date(state.userGoal.date);
     const daysLeft=Math.max(0,Math.ceil((goalDate-new Date())/86400000));
-    pill.style.display='flex';
-    gl.innerText=state.userGoal.label||'Goal';
-    gd.innerText=`${daysLeft} days left`;
+    if(gl) gl.innerText=(state.userGoal.label||'Goal') + ' •';
+    if(gd) gd.innerText=`${daysLeft} Days Left`;
 }
 function setUserGoal(){
     const label=prompt('Goal name (e.g. "Finish Electromagnetics"):');
@@ -378,12 +406,28 @@ function loadSmartSuggestions(){
 
 // ─── WEAK AREA DETECTOR ────────────────────────────────────────────────────────
 function renderWeakAreaAlert(){
-    const alert=document.getElementById('weak-area-alert');const alertText=document.getElementById('weak-alert-text');if(!alert)return;
-    const weak=[];
-    for(const[subj,topics]of Object.entries(state.syllabus)){const done=topics.filter(t=>t.done).length;const total=topics.length;const pct=total>0?Math.round(done/total*100):0;if(pct<20&&total>0)weak.push({subj,pct});}
-    weak.sort((a,b)=>a.pct-b.pct);
-    if(weak.length>0){alert.style.display='flex';alertText.innerHTML=`<b>Needs attention:</b> ${weak.slice(0,3).map(w=>`<b>${w.subj}</b> (${w.pct}%)`).join(', ')}`;}
-    else alert.style.display='none';
+    const alert=document.getElementById('weak-area-alert');
+    const alertText=document.getElementById('weak-alert-text');
+    if(!alert) return;
+    
+    // Identify tests with < 60% score OR with analysis comments
+    const weakTests = state.tests
+        .filter(t => t.isCompleted && ( (t.total>0 && (t.scored/t.total)<0.6) || (t.analysis && t.analysis.trim().length>0) ))
+        .sort((a,b) => new Date(b.date) - new Date(a.date))
+        .slice(0, 3); // top 3 recent
+
+    if(weakTests.length > 0){
+        alert.style.display='flex';
+        alertText.innerHTML = weakTests.map(t => {
+            const pct = t.total>0 ? Math.round(t.scored/t.total*100) : 0;
+            return `<div style="background:rgba(255,255,255,0.04); padding:9px 12px; border-radius:6px; border-left:3px solid var(--accent-orange); font-size:0.85rem;">
+                <div style="font-weight:600; margin-bottom:4px; color:var(--text-main);">${t.topic} <span style="color:var(--accent-orange); font-size:0.75rem; margin-left:6px;">(${pct}%)</span></div>
+                ${t.analysis ? `<div style="color:var(--text-muted); font-style:italic; line-height:1.4;">" ${t.analysis} "</div>` : '<div style="color:var(--text-muted); font-style:italic; font-size:0.75rem;">Low score, needs revision.</div>'}
+            </div>`;
+        }).join('');
+    } else {
+        alert.style.display='none';
+    }
 }
 
 // ─── SPACED REPETITION ────────────────────────────────────────────────────────
@@ -752,8 +796,8 @@ function calculateScore(){
     const raw=parseFloat(document.getElementById('calc-raw')?.value);
     const box=document.getElementById('calc-result');if(!box)return;
     if(isNaN(raw)||raw<0||raw>100){box.style.display='none';return;}
-    const params={'2025':{Mq:24,Mt:78},'2024':{Mq:25,Mt:80},'2023':{Mq:23,Mt:82}};
-    const p=params[document.getElementById('calc-year')?.value]||params['2025'];
+    const params={'2026':{Mq:25,Mt:78},'2025':{Mq:24,Mt:78},'2024':{Mq:25,Mt:80},'2023':{Mq:23,Mt:82}};
+    const p=params[document.getElementById('calc-year')?.value]||params['2026'];
     let score=Math.round(350+((raw-p.Mq)/(p.Mt-p.Mq))*550);score=Math.min(1000,Math.max(0,score));
     let airMin,airMax;
     if(raw>=78){airMin=1;airMax=50;}else if(raw>=65){airMin=51;airMax=300;}else if(raw>=55){airMin=301;airMax=800;}else if(raw>=50){airMin=801;airMax=1500;}else if(raw>=45){airMin=1501;airMax=3000;}else if(raw>=40){airMin=3001;airMax=6000;}else if(raw>=35){airMin=6001;airMax=12000;}else{airMin=12001;airMax=50000;}

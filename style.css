@@ -68,10 +68,15 @@ h1,h2,h3,h4{font-family:var(--font-heading);}
 .top-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;flex-shrink:0;gap:12px;flex-wrap:wrap;}
 .subtitle{color:var(--text-muted);margin-top:2px;font-size:0.87rem;}
 
-/* Goal Days Pill */
-.goal-days-pill{padding:8px 14px;border-radius:20px;font-size:0.82rem;display:flex;align-items:center;gap:8px;cursor:pointer;border-left:3px solid var(--accent-orange);}
-.goal-days-pill:hover{background:rgba(249,115,22,0.1);}
-.today-date{padding:7px 14px;border-radius:20px;font-size:0.82rem;display:flex;align-items:center;gap:8px;}
+/* ── STATUS BAR ── */
+.status-bar { padding:14px 18px; margin-bottom:18px; display:flex; flex-direction:column; gap:10px; }
+.status-today { font-size:0.92rem; color:var(--text-main); border-bottom:1px solid var(--card-border); padding-bottom:10px; margin-bottom:4px; }
+.status-pills { display:flex; gap:12px; flex-wrap:wrap; }
+.status-pill { display:flex; align-items:center; gap:12px; padding:10px 14px; background:rgba(0,0,0,0.15); border:1px solid var(--card-border); border-radius:8px; cursor:pointer; transition:all 0.2s; flex:1; min-width:200px; }
+.status-pill:hover { background:rgba(255,255,255,0.06); border-color:var(--accent-blue); transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,0.1); }
+.pill-label { font-size:0.72rem; color:var(--text-muted); text-transform:uppercase; font-weight:700; letter-spacing:0.5px; margin-bottom:3px; }
+.pill-val { font-size:0.92rem; font-weight:700; color:var(--text-main); }
+
 .theme-toggle{background:rgba(255,255,255,0.08);border:1px solid var(--card-border);color:var(--text-main);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:0.9rem;transition:0.2s;display:flex;align-items:center;justify-content:center;}
 .theme-toggle:hover{background:var(--accent-blue);color:#fff;}
 .glass{background:var(--card-bg);backdrop-filter:blur(12px);border:1px solid var(--card-border);border-radius:12px;}
