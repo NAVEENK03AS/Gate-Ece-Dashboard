@@ -1,357 +1,386 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GATE 2027 ECE - Supreme Tracker</title>
-    <meta name="description" content="GATE ECE 2027 preparation dashboard with syllabus tracker, previous year trends, and study hours.">
+    <title>GATE 2027 ECE — Supreme Tracker</title>
+    <meta name="description" content="GATE ECE 2027 ultimate preparation dashboard with syllabus, preparation tracker, PYQ, trends, study hours, score calculator, streak, and formula bank.">
     <link rel="stylesheet" href="style.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&family=Outfit:wght@300;400;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
-
 <body>
-    <div class="app-container">
+<div class="app-container">
 
-        <!-- Sidebar Navigation -->
-        <aside class="sidebar">
-            <div class="brand">
-                <i class="fas fa-microchip neon-blue"></i>
-                <h2>GATE ECE <span class="accent-text">'27</span></h2>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="brand">
+            <i class="fas fa-microchip neon-blue"></i>
+            <h2>GATE ECE <span class="accent-text">'27</span></h2>
+        </div>
+
+        <div class="user-profile glass">
+            <img id="profile-img" src="https://ui-avatars.com/api/?name=Naveenkumar+A&background=0D8ABC&color=fff" alt="Profile">
+            <div class="profile-name-row">
+                <span id="user-name-display">Naveenkumar A</span>
+                <button onclick="openNameModal()" class="icon-btn" title="Edit Name"><i class="fas fa-pen"></i></button>
             </div>
+            <div class="streak-badge" id="streak-badge"><i class="fas fa-fire"></i> <span id="streak-count">0</span> day streak</div>
+        </div>
 
-            <div class="user-profile glass">
-                <img id="profile-img" src="https://ui-avatars.com/api/?name=Naveenkumar+A&background=0D8ABC&color=fff"
-                    alt="Profile">
-                <div class="profile-name-row">
-                    <span id="user-name-display">Naveenkumar A</span>
-                    <button onclick="openNameModal()" class="icon-btn" title="Edit Name"><i
-                            class="fas fa-pen"></i></button>
-                </div>
-            </div>
+        <nav class="nav-menu">
+            <button class="nav-btn active" data-target="view-dashboard"><i class="fas fa-home"></i> Dashboard</button>
+            <button class="nav-btn" data-target="view-syllabus-static"><i class="fas fa-book-open"></i> Syllabus</button>
+            <button class="nav-btn" data-target="view-preparation"><i class="fas fa-tasks"></i> Preparation</button>
+            <button class="nav-btn" data-target="view-formulas"><i class="fas fa-flask"></i> Formula Bank</button>
+            <button class="nav-btn" data-target="view-trends"><i class="fas fa-chart-bar"></i> PY Trends</button>
+            <button class="nav-btn" data-target="view-pyq"><i class="fas fa-history"></i> PYQ Tracker</button>
+            <button class="nav-btn" data-target="view-tests"><i class="fas fa-file-signature"></i> Test Series</button>
+            <button class="nav-btn" data-target="view-hours"><i class="fas fa-clock"></i> Study Hours</button>
+            <button class="nav-btn" data-target="view-calculator"><i class="fas fa-calculator"></i> Score Calculator</button>
+            <button class="nav-btn" data-target="view-cutoffs"><i class="fas fa-trophy"></i> Cutoff Tracker</button>
+        </nav>
 
-            <nav class="nav-menu">
-                <button class="nav-btn active" data-target="view-dashboard"><i class="fas fa-home"></i>
-                    Dashboard</button>
-                <button class="nav-btn" data-target="view-syllabus-static"><i class="fas fa-book-open"></i> Syllabus</button>
-                <button class="nav-btn" data-target="view-preparation"><i class="fas fa-tasks"></i> Preparation</button>
-                <button class="nav-btn" data-target="view-trends"><i class="fas fa-chart-bar"></i> Previous Year Trends</button>
-                <button class="nav-btn" data-target="view-pyq"><i class="fas fa-history"></i> PYQ Tracker</button>
-                <button class="nav-btn" data-target="view-tests"><i class="fas fa-file-signature"></i> Test Series</button>
-                <button class="nav-btn" data-target="view-hours"><i class="fas fa-clock"></i> Study Hours</button>
-            </nav>
-
-            <div class="countdown-widget glass">
-                <p>GATE 2027 — Feb 6</p>
-                <div class="days-circle">
-                    <h3 id="days-left-count">--</h3>
-                    <span>Days Left</span>
-                </div>
-            </div>
-        </aside>
-
-        <!-- Main Workspace -->
-        <main class="main-content">
-            <header class="top-header">
-                <div>
-                    <h1 id="page-title">Dashboard</h1>
-                    <p class="subtitle" id="page-subtitle">Track your progress and stay motivated.</p>
-                </div>
-                <div class="today-date glass">
-                    <i class="fas fa-calendar-alt"></i> <span id="today-date-display"></span>
-                </div>
-            </header>
-
-            <div class="view-container">
-
-                <!-- ===== VIEW: DASHBOARD ===== -->
-                <section id="view-dashboard" class="view active">
-                    <!-- Motivation Banner -->
-                    <div class="motivation-banner" id="motivation-banner">
-                        <div class="banner-overlay"></div>
-                        <div class="quote-content">
-                            <h2 id="motivational-quote"></h2>
-                            <p id="motivational-inst"></p>
-                        </div>
-                    </div>
-
-                    <!-- Stats Row -->
-                    <div class="dashboard-grid">
-                        <div class="dash-card glass">
-                            <div class="card-header"><i class="fas fa-tasks neon-blue"></i>
-                                <h4>Preparation</h4>
-                            </div>
-                            <div class="progress-wrap">
-                                <div class="progress-bar">
-                                    <div class="fill" id="dash-syl-fill"></div>
-                                </div>
-                                <span id="dash-syl-text" class="progress-percent">0%</span>
-                            </div>
-                        </div>
-                        <div class="dash-card glass">
-                            <div class="card-header"><i class="fas fa-history neon-orange"></i>
-                                <h4>PYQs Done</h4>
-                            </div>
-                            <div class="progress-wrap">
-                                <div class="progress-bar">
-                                    <div class="fill orange-fill" id="dash-pyq-fill"></div>
-                                </div>
-                                <span id="dash-pyq-text" class="progress-percent">0%</span>
-                            </div>
-                        </div>
-                        <div class="dash-card glass">
-                            <div class="card-header"><i class="fas fa-stopwatch neon-blue"></i>
-                                <h4>Hours This Week</h4>
-                            </div>
-                            <div class="stat-number"><span id="dash-hours-text">0</span> hr</div>
-                        </div>
-                        <div class="dash-card glass">
-                            <div class="card-header"><i class="fas fa-file-signature neon-orange"></i>
-                                <h4>Tests Done</h4>
-                            </div>
-                            <div class="stat-number"><span id="dash-tests-text">0</span></div>
-                        </div>
-                    </div>
-
-                    <!-- Subject Progress + Upcoming Tests -->
-                    <div class="dash-bottom-grid">
-                        <div class="dash-detailed-panel glass">
-                            <h3><i class="fas fa-list neon-blue"></i> Subject-Wise Progress</h3>
-                            <div id="dash-subject-breakdown" class="breakdown-list"></div>
-                        </div>
-                        <div class="dash-detailed-panel glass">
-                            <h3><i class="fas fa-calendar-alt neon-orange"></i> Upcoming Tests</h3>
-                            <div id="dash-upcoming-tests" class="breakdown-list"></div>
-                        </div>
-                    </div>
-
-                    <!-- IIT / IISc / PSU Inspiration Photo Grid -->
-                    <div class="inst-section">
-                        <h3 class="inst-title"><i class="fas fa-university neon-orange"></i> Dream Institutions & PSUs
-                        </h3>
-                        <div class="inst-grid" id="inst-grid">
-                            <!-- Rendered via JS -->
-                        </div>
-                    </div>
-                </section>
-
-                <!-- ===== VIEW: SYLLABUS (STATIC) ===== -->
-                <section id="view-syllabus-static" class="view">
-                    <div class="glass" style="padding:18px 24px; margin-bottom:22px; border-left:4px solid #3b82f6;">
-                        <h3 style="margin-bottom:8px;"><i class="fas fa-graduation-cap neon-blue"></i> GATE 2026 ECE Official Syllabus</h3>
-                        <p style="color:var(--text-muted); font-size:0.9rem;">As per IIT Guwahati — GATE 2026. Click any subject to expand its topics.</p>
-                        <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:12px;">
-                            <span style="background:rgba(59,130,246,0.15);color:#60a5fa;padding:4px 12px;border-radius:20px;font-size:0.82rem;"><i class="fas fa-book"></i> 9 Subjects</span>
-                            <span style="background:rgba(245,158,11,0.15);color:#fbbf24;padding:4px 12px;border-radius:20px;font-size:0.82rem;"><i class="fas fa-star"></i> 100 Marks Total</span>
-                            <span style="background:rgba(16,185,129,0.15);color:#34d399;padding:4px 12px;border-radius:20px;font-size:0.82rem;"><i class="fas fa-link"></i> source: gate2026.iitg.ac.in</span>
-                        </div>
-                    </div>
-                    <div id="syllabus-static-container" class="accordion-container"></div>
-                </section>
-
-                <!-- ===== VIEW: PREPARATION TRACKER ===== -->
-                <section id="view-preparation" class="view">
-                    <div class="glass"
-                        style="padding: 18px 24px; margin-bottom: 22px; text-align: center; border-left:4px solid var(--success);">
-                        <h3 style="margin-bottom: 12px; font-size:1.05rem;">Overall Preparation Progress</h3>
-                        <div class="progress-bar"
-                            style="height: 14px; margin-bottom: 10px; background:rgba(255,255,255,0.08);">
-                            <div class="fill" id="prep-page-overall-fill" style="width: 0%; background:var(--success);">
-                            </div>
-                        </div>
-                        <div><span id="prep-page-overall-text" style="font-weight: bold; font-size: 1.6rem;">0%</span>
-                            <span style="color:var(--text-muted); font-size:0.9rem; margin-left:8px;">Syllabus Completed</span></div>
-                    </div>
-
-                    <div class="pdf-box glass">
-                        <div class="pdf-header">
-                            <h3><i class="fas fa-file-pdf neon-orange"></i> Reference PDF Viewer</h3>
-                            <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
-                                <a id="pdf-fallback-link" class="primary-btn orange-btn"
-                                    style="display:none; text-decoration:none;" target="_blank"><i
-                                        class="fas fa-external-link-alt"></i> Open Fullscreen</a>
-                                <label for="pdf-upload" class="primary-btn" style="cursor:pointer; margin:0;"><i
-                                        class="fas fa-upload"></i> Load PDF</label>
-                                <input type="file" id="pdf-upload" accept="application/pdf" style="display:none;"
-                                    onchange="loadPDF(event)">
-                            </div>
-                        </div>
-                        <embed id="pdf-frame" type="application/pdf"
-                            style="width:100%;height:480px;display:none;border-radius:8px;background:#fff;">
-                        <div id="pdf-placeholder">
-                            <i class="fas fa-file-pdf" style="font-size:2.5rem; opacity:0.3; margin-bottom:12px;"></i>
-                            <p>Upload your GATE ECE Syllabus or any study PDF to view it right here.</p>
-                            <p style="font-size:0.8rem; margin-top:8px; opacity:0.6;">Chrome may block embedded PDFs —
-                                use "Open Fullscreen" button if so.</p>
-                        </div>
-                    </div>
-
-                    <div class="section-intro glass">
-                        <p>✅ Check off topics as you complete them. Subject % and overall % update automatically. Use <b>+</b> to add custom topics.</p>
-                    </div>
-                    <div id="syllabus-container" class="accordion-container"></div>
-                </section>
-
-                <!-- ===== VIEW: PREVIOUS YEAR TRENDS ===== -->
-                <section id="view-trends" class="view">
-                    <div class="glass" style="padding: 20px; margin-bottom: 24px;">
-                        <h3 style="margin-bottom:15px; font-size:1.1rem;"><i class="fas fa-chart-bar neon-orange"></i>
-                            Subject-wise Marks Distribution (Previous Years)</h3>
-                        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:16px;">Year-wise marks from GATE EC papers. You can type your own observed marks in the "My Notes" column.</p>
-                        <div style="overflow-x:auto;">
-                            <table style="width:100%; text-align:left; border-collapse: collapse; min-width:700px;">
-                                <thead>
-                                    <tr style="border-bottom: 2px solid var(--card-border); background:rgba(0,0,0,0.2);">
-                                        <th style="padding: 12px; font-weight:600;">Subject</th>
-                                        <th style="padding: 12px; font-weight:600; text-align:center;">2021</th>
-                                        <th style="padding: 12px; font-weight:600; text-align:center;">2022</th>
-                                        <th style="padding: 12px; font-weight:600; text-align:center;">2023</th>
-                                        <th style="padding: 12px; font-weight:600; text-align:center;">2024</th>
-                                        <th style="padding: 12px; font-weight:600; text-align:center;">Approx. Total</th>
-                                        <th style="padding: 12px; font-weight:600; text-align:center;">My Notes <i class="fas fa-edit" style="font-size:0.75rem; color:var(--text-muted);"></i></th>
-                                        <th style="padding: 12px; font-weight:600; text-align:center;">Priority</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="trends-tbody">
-                                    <!-- JS outputs table -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="glass" style="padding: 22px;">
-                        <h3 style="margin-bottom:12px; font-size:1.1rem;"><i class="fas fa-image neon-blue"></i> Upload
-                            Trends Document / Image</h3>
-                        <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:15px;">Upload a screenshot or
-                            image of exact previous year trends to keep it saved for quick reference.</p>
-
-                        <label for="trend-img-upload" class="primary-btn"
-                            style="cursor:pointer; display:inline-block; width:auto; margin-bottom:20px;"><i
-                                class="fas fa-upload"></i> Select Image</label>
-                        <input type="file" id="trend-img-upload" accept="image/*" onchange="loadTrendImage(event)"
-                            style="display:none;">
-
-                        <img id="trend-img-preview"
-                            style="width:100%; border-radius: 10px; border:2px solid var(--card-border); display:none; max-height:700px; object-fit:contain; background:#000;">
-                    </div>
-                </section>
-
-                <!-- ===== VIEW: PYQ TRACKER ===== -->
-                <section id="view-pyq" class="view">
-                    <div class="section-intro glass">
-                        <p>Track your Previous Year Question solving below. Delete any row you don't need.</p>
-                    </div>
-                    <div id="pyq-container" class="grid-container"></div>
-                </section>
-
-                <!-- ===== VIEW: TEST SERIES ===== -->
-                <section id="view-tests" class="view">
-                    <div class="test-layout">
-                        <div class="test-form glass">
-                            <h3>Test Management</h3>
-                            <div class="toggle-row">
-                                <button type="button" class="type-btn active" id="btn-type-schedule"
-                                    onclick="setTestFormType('schedule')">Schedule</button>
-                                <button type="button" class="type-btn" id="btn-type-completed"
-                                    onclick="setTestFormType('completed')">Log Result</button>
-                            </div>
-                            <form id="test-form">
-                                <input type="hidden" id="t-form-type" value="schedule">
-                                <input type="hidden" id="t-editing-id" value="">
-                                <div class="form-group">
-                                    <label>Test Series (e.g., ACE, MadeEasy)</label>
-                                    <input type="text" id="t-provider" required placeholder="ACE Academy">
-                                </div>
-                                <div class="form-group">
-                                    <label>Test Topic / Name</label>
-                                    <input type="text" id="t-topic" required
-                                        placeholder="Mock Test 1 — Signals & Systems">
-                                </div>
-                                <div class="form-group">
-                                    <label id="t-date-label">Scheduled Date</label>
-                                    <input type="date" id="t-date" required>
-                                </div>
-                                <div id="marks-section" style="display:none;">
-                                    <div class="form-row">
-                                        <div class="form-group">
-                                            <label>Marks Scored</label>
-                                            <input type="number" id="t-scored" step="0.5" placeholder="55">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Total Marks</label>
-                                            <input type="number" id="t-total" placeholder="100">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Performance Notes / Mistakes</label>
-                                        <textarea id="t-analysis" rows="3"
-                                            placeholder="Silly mistake in Fourier Transform..."></textarea>
-                                    </div>
-                                </div>
-                                <button type="submit" id="t-submit-btn" class="primary-btn">Save to Schedule</button>
-                            </form>
-                        </div>
-
-                        <div class="test-history">
-                            <h3>Upcoming Schedule</h3>
-                            <div id="tests-scheduled-list" class="tests-list"></div>
-                            <h3 style="margin-top:30px;">Completed Test History</h3>
-                            <div id="tests-list" class="tests-list"></div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- ===== VIEW: STUDY HOURS ===== -->
-                <section id="view-hours" class="view">
-                    <div class="hours-layout">
-                        <div class="hours-logger glass">
-                            <h3>Log Today's Hours</h3>
-                            <form id="hours-form">
-                                <div class="form-group">
-                                    <label>Date</label>
-                                    <input type="date" id="h-date" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Hours Studied</label>
-                                    <input type="number" id="h-amount" step="0.5" min="0" max="24" required
-                                        placeholder="e.g. 6.5">
-                                </div>
-                                <button type="submit" class="primary-btn">Log Hours</button>
-                            </form>
-                            <h4 style="margin-top:20px; color:var(--text-muted);">Log History</h4>
-                            <div id="hours-log-list"
-                                style="margin-top:12px; display:flex; flex-direction:column; gap:8px; max-height:200px; overflow-y:auto;">
-                            </div>
-                        </div>
-                        <div class="hours-chart glass">
-                            <h3>Last 7 Days Activity</h3>
-                            <div class="chart-container" id="hours-chart"></div>
-                        </div>
-                    </div>
-                </section>
-
-            </div>
-        </main>
-    </div>
-
-    <!-- Edit Name Modal -->
-    <div id="name-modal" class="modal-backdrop" style="display:none;">
-        <div class="modal-box glass">
-            <h3 style="margin-bottom:16px;"><i class="fas fa-user-edit neon-blue"></i> Edit Your Name</h3>
-            <input type="text" id="name-input" class="modal-input" placeholder="Your full name">
-            <div style="display:flex; gap:10px; margin-top:14px;">
-                <button onclick="saveName()" class="primary-btn">Save</button>
-                <button onclick="closeNameModal()" class="primary-btn"
-                    style="background:rgba(255,255,255,0.1);">Cancel</button>
+        <div class="countdown-widget glass">
+            <p>GATE 2027 — Feb 6</p>
+            <div class="days-circle">
+                <h3 id="days-left-count">--</h3>
+                <span>Days Left</span>
             </div>
         </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="top-header">
+            <div>
+                <h1 id="page-title">Dashboard</h1>
+                <p class="subtitle" id="page-subtitle">Track your progress and stay motivated.</p>
+            </div>
+            <div style="display:flex;gap:10px;align-items:center;">
+                <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Toggle Theme"><i class="fas fa-moon"></i></button>
+                <button class="primary-btn" onclick="exportPDF()" style="width:auto;padding:8px 16px;font-size:0.85rem;"><i class="fas fa-download"></i> Export PDF</button>
+                <div class="today-date glass"><i class="fas fa-calendar-alt"></i> <span id="today-date-display"></span></div>
+            </div>
+        </header>
+
+        <div class="view-container">
+
+            <!-- ===== DASHBOARD ===== -->
+            <section id="view-dashboard" class="view active">
+                <div class="motivation-banner" id="motivation-banner">
+                    <div class="banner-overlay"></div>
+                    <div class="quote-content">
+                        <h2 id="motivational-quote"></h2>
+                        <p id="motivational-inst"></p>
+                    </div>
+                </div>
+
+                <!-- Today's Target -->
+                <div class="today-target glass" id="today-target-box">
+                    <div class="target-header">
+                        <h3><i class="fas fa-crosshairs neon-blue"></i> Today's Study Target</h3>
+                        <span class="target-date" id="target-date-label"></span>
+                    </div>
+                    <div id="today-target-list" class="target-list"></div>
+                </div>
+
+                <!-- Weak Area Alert -->
+                <div id="weak-area-alert" class="weak-alert glass" style="display:none;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div id="weak-alert-text"></div>
+                </div>
+
+                <!-- Revision Due Alert -->
+                <div id="revision-due-box" class="revision-alert glass" style="display:none;">
+                    <h4><i class="fas fa-redo neon-blue"></i> Due for Revision Today</h4>
+                    <div id="revision-due-list"></div>
+                </div>
+
+                <!-- Stats Row -->
+                <div class="dashboard-grid">
+                    <div class="dash-card glass">
+                        <div class="card-header"><i class="fas fa-tasks neon-blue"></i><h4>Preparation</h4></div>
+                        <div class="progress-wrap">
+                            <div class="progress-bar"><div class="fill" id="dash-syl-fill"></div></div>
+                            <span id="dash-syl-text" class="progress-percent">0%</span>
+                        </div>
+                    </div>
+                    <div class="dash-card glass">
+                        <div class="card-header"><i class="fas fa-history neon-orange"></i><h4>PYQs Done</h4></div>
+                        <div class="progress-wrap">
+                            <div class="progress-bar"><div class="fill orange-fill" id="dash-pyq-fill"></div></div>
+                            <span id="dash-pyq-text" class="progress-percent">0%</span>
+                        </div>
+                    </div>
+                    <div class="dash-card glass">
+                        <div class="card-header"><i class="fas fa-stopwatch neon-blue"></i><h4>Hours This Week</h4></div>
+                        <div class="stat-number"><span id="dash-hours-text">0</span> hr</div>
+                    </div>
+                    <div class="dash-card glass">
+                        <div class="card-header"><i class="fas fa-fire neon-orange"></i><h4>Current Streak</h4></div>
+                        <div class="stat-number"><span id="dash-streak-text">0</span> 🔥</div>
+                    </div>
+                </div>
+
+                <!-- Test Score Chart + Subject Progress -->
+                <div class="dash-bottom-grid">
+                    <div class="dash-detailed-panel glass">
+                        <h3><i class="fas fa-list neon-blue"></i> Subject-Wise Progress</h3>
+                        <div id="dash-subject-breakdown" class="breakdown-list"></div>
+                    </div>
+                    <div class="dash-detailed-panel glass">
+                        <h3><i class="fas fa-chart-line neon-orange"></i> Test Score Trend</h3>
+                        <div id="dash-score-chart" class="score-chart-wrap"></div>
+                    </div>
+                </div>
+
+                <!-- Calendar Heatmap -->
+                <div class="glass" style="padding:18px;margin-bottom:22px;">
+                    <h3 style="margin-bottom:14px;font-size:1rem;"><i class="fas fa-th neon-blue"></i> Study Activity — Last 60 Days</h3>
+                    <div id="heatmap-container" class="heatmap-grid"></div>
+                </div>
+
+                <!-- Institutions -->
+                <div class="inst-section">
+                    <h3 class="inst-title"><i class="fas fa-university neon-orange"></i> Dream Institutions & PSUs</h3>
+                    <div class="inst-grid" id="inst-grid"></div>
+                </div>
+            </section>
+
+            <!-- ===== SYLLABUS STATIC ===== -->
+            <section id="view-syllabus-static" class="view">
+                <div class="glass" style="padding:18px 24px;margin-bottom:22px;border-left:4px solid #3b82f6;">
+                    <h3 style="margin-bottom:8px;"><i class="fas fa-graduation-cap neon-blue"></i> GATE 2026 EC — Official Syllabus</h3>
+                    <p style="color:var(--text-muted);font-size:0.9rem;">Verbatim from IIT Guwahati official PDF (gate2026.iitg.ac.in). Click subject to expand.</p>
+                    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;">
+                        <span class="info-pill blue">📚 9 Subjects</span>
+                        <span class="info-pill orange">⭐ 100 Marks Total</span>
+                        <span class="info-pill green">✅ Source: gate2026.iitg.ac.in</span>
+                    </div>
+                </div>
+                <div id="syllabus-static-container" class="accordion-container"></div>
+            </section>
+
+            <!-- ===== PREPARATION TRACKER ===== -->
+            <section id="view-preparation" class="view">
+                <div class="glass" style="padding:18px 24px;margin-bottom:22px;text-align:center;border-left:4px solid var(--success);">
+                    <h3 style="margin-bottom:12px;font-size:1.05rem;">Overall Preparation Progress</h3>
+                    <div class="progress-bar" style="height:16px;margin-bottom:10px;background:rgba(255,255,255,0.08);">
+                        <div class="fill" id="prep-page-overall-fill" style="width:0%;background:var(--success);"></div>
+                    </div>
+                    <div><span id="prep-page-overall-text" style="font-weight:bold;font-size:1.8rem;">0%</span>
+                    <span style="color:var(--text-muted);font-size:0.9rem;margin-left:8px;">Syllabus Completed</span></div>
+                </div>
+                <div class="section-intro glass">
+                    <p>✅ Check topics as you complete them. Each completed topic schedules automatic spaced repetition reviews. Use <b>📝</b> to add notes/formulas to any topic.</p>
+                </div>
+                <div id="syllabus-container" class="accordion-container"></div>
+            </section>
+
+            <!-- ===== FORMULA BANK ===== -->
+            <section id="view-formulas" class="view">
+                <div class="glass" style="padding:18px 24px;margin-bottom:22px;border-left:4px solid #8b5cf6;">
+                    <h3 style="margin-bottom:8px;"><i class="fas fa-flask" style="color:#8b5cf6;"></i> Formula Bank & Quick Reference</h3>
+                    <p style="color:var(--text-muted);font-size:0.9rem;">Add and organize key formulas per subject. Click a subject to expand its formula bank.</p>
+                </div>
+                <div id="formula-container" class="accordion-container"></div>
+            </section>
+
+            <!-- ===== PREVIOUS YEAR TRENDS ===== -->
+            <section id="view-trends" class="view">
+                <div class="glass" style="padding:20px;margin-bottom:24px;">
+                    <h3 style="margin-bottom:15px;font-size:1.1rem;"><i class="fas fa-chart-bar neon-orange"></i> Subject-wise Marks Distribution (PY Analysis)</h3>
+                    <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:16px;">Year-wise marks from official GATE EC papers. Edit "My Notes" column to track your own observations.</p>
+                    <div style="overflow-x:auto;">
+                        <table style="width:100%;text-align:left;border-collapse:collapse;min-width:750px;">
+                            <thead>
+                                <tr style="border-bottom:2px solid var(--card-border);background:rgba(0,0,0,0.2);">
+                                    <th style="padding:12px;font-weight:600;">Subject</th>
+                                    <th style="padding:12px;font-weight:600;text-align:center;">2020</th>
+                                    <th style="padding:12px;font-weight:600;text-align:center;">2021</th>
+                                    <th style="padding:12px;font-weight:600;text-align:center;">2022</th>
+                                    <th style="padding:12px;font-weight:600;text-align:center;">2023</th>
+                                    <th style="padding:12px;font-weight:600;text-align:center;">2024</th>
+                                    <th style="padding:12px;font-weight:600;text-align:center;">Avg</th>
+                                    <th style="padding:12px;font-weight:600;text-align:center;">My Notes ✏️</th>
+                                    <th style="padding:12px;font-weight:600;text-align:center;">Priority</th>
+                                </tr>
+                            </thead>
+                            <tbody id="trends-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="glass" style="padding:22px;">
+                    <h3 style="margin-bottom:12px;font-size:1.1rem;"><i class="fas fa-image neon-blue"></i> Upload Trends Image</h3>
+                    <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:15px;">Upload your own screenshot/chart of trend data — saved persistently.</p>
+                    <label for="trend-img-upload" class="primary-btn" style="cursor:pointer;display:inline-block;width:auto;margin-bottom:20px;"><i class="fas fa-upload"></i> Select Image</label>
+                    <input type="file" id="trend-img-upload" accept="image/*" onchange="loadTrendImage(event)" style="display:none;">
+                    <img id="trend-img-preview" style="width:100%;border-radius:10px;border:2px solid var(--card-border);display:none;max-height:700px;object-fit:contain;background:#000;">
+                </div>
+            </section>
+
+            <!-- ===== PYQ TRACKER ===== -->
+            <section id="view-pyq" class="view">
+                <div class="section-intro glass"><p>Track your Previous Year Question solving below.</p></div>
+                <div id="pyq-container" class="grid-container"></div>
+            </section>
+
+            <!-- ===== TEST SERIES ===== -->
+            <section id="view-tests" class="view">
+                <div class="test-layout">
+                    <div class="test-form glass">
+                        <h3>Test Management</h3>
+                        <div class="toggle-row">
+                            <button type="button" class="type-btn active" id="btn-type-schedule" onclick="setTestFormType('schedule')">Schedule</button>
+                            <button type="button" class="type-btn" id="btn-type-completed" onclick="setTestFormType('completed')">Log Result</button>
+                        </div>
+                        <form id="test-form">
+                            <input type="hidden" id="t-form-type" value="schedule">
+                            <input type="hidden" id="t-editing-id" value="">
+                            <div class="form-group"><label>Test Series</label><input type="text" id="t-provider" required placeholder="ACE Academy"></div>
+                            <div class="form-group"><label>Test Topic / Name</label><input type="text" id="t-topic" required placeholder="Mock Test 1 — Signals & Systems"></div>
+                            <div class="form-group"><label id="t-date-label">Scheduled Date</label><input type="date" id="t-date" required></div>
+                            <div id="marks-section" style="display:none;">
+                                <div class="form-row">
+                                    <div class="form-group"><label>Marks Scored</label><input type="number" id="t-scored" step="0.5" placeholder="55"></div>
+                                    <div class="form-group"><label>Total Marks</label><input type="number" id="t-total" placeholder="100"></div>
+                                </div>
+                                <div class="form-group"><label>Performance Notes</label><textarea id="t-analysis" rows="3" placeholder="Silly mistake in Fourier Transform..."></textarea></div>
+                            </div>
+                            <button type="submit" id="t-submit-btn" class="primary-btn">Save to Schedule</button>
+                        </form>
+                    </div>
+                    <div class="test-history">
+                        <h3>Upcoming Schedule</h3>
+                        <div id="tests-scheduled-list" class="tests-list"></div>
+                        <h3 style="margin-top:30px;">Completed Test History</h3>
+                        <div id="tests-list" class="tests-list"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== STUDY HOURS ===== -->
+            <section id="view-hours" class="view">
+                <div class="hours-layout">
+                    <div class="hours-logger glass">
+                        <h3>Log Today's Hours</h3>
+                        <form id="hours-form">
+                            <div class="form-group"><label>Date</label><input type="date" id="h-date" required></div>
+                            <div class="form-group"><label>Hours Studied</label><input type="number" id="h-amount" step="0.5" min="0" max="24" required placeholder="e.g. 6.5"></div>
+                            <div class="form-group"><label>Subject Focus</label>
+                                <select id="h-subject" style="width:100%;background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.1);padding:8px 12px;color:#fff;border-radius:6px;font-family:inherit;">
+                                    <option value="">All / General</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="primary-btn">Log Hours</button>
+                        </form>
+                        <h4 style="margin-top:20px;color:var(--text-muted);">Log History</h4>
+                        <div id="hours-log-list" style="margin-top:12px;display:flex;flex-direction:column;gap:8px;max-height:200px;overflow-y:auto;"></div>
+                    </div>
+                    <div class="hours-chart glass">
+                        <h3>Last 7 Days Activity</h3>
+                        <div class="chart-container" id="hours-chart"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== GATE SCORE CALCULATOR ===== -->
+            <section id="view-calculator" class="view">
+                <div class="glass" style="padding:24px;max-width:700px;margin:0 auto 24px;">
+                    <h3 style="margin-bottom:6px;"><i class="fas fa-calculator neon-blue"></i> GATE Score Estimator</h3>
+                    <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:20px;">Enter your raw marks to estimate your GATE score and expected AIR range for ECE.</p>
+                    <div class="form-row" style="margin-bottom:16px;">
+                        <div class="form-group">
+                            <label>Your Raw Marks (out of 100)</label>
+                            <input type="number" id="calc-raw" min="0" max="100" step="0.5" placeholder="e.g. 55" oninput="calculateScore()">
+                        </div>
+                        <div class="form-group">
+                            <label>Year (for normalization)</label>
+                            <select id="calc-year" onchange="calculateScore()" style="width:100%;background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.1);padding:8px 12px;color:#fff;border-radius:6px;font-family:inherit;font-size:0.9rem;">
+                                <option value="2024">2024</option>
+                                <option value="2023">2023</option>
+                                <option value="2022">2022</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="calc-result" class="calc-result-box" style="display:none;"></div>
+                </div>
+                <div class="glass" style="padding:20px;max-width:700px;margin:0 auto;">
+                    <h3 style="margin-bottom:14px;font-size:1rem;"><i class="fas fa-bullseye neon-orange"></i> Target Score Guide</h3>
+                    <table style="width:100%;border-collapse:collapse;">
+                        <thead>
+                            <tr style="border-bottom:2px solid var(--card-border);background:rgba(0,0,0,0.2);">
+                                <th style="padding:10px;text-align:left;font-size:0.88rem;">Institution</th>
+                                <th style="padding:10px;text-align:center;font-size:0.88rem;">GEN Score</th>
+                                <th style="padding:10px;text-align:center;font-size:0.88rem;">OBC Score</th>
+                                <th style="padding:10px;text-align:center;font-size:0.88rem;">SC/ST Score</th>
+                            </tr>
+                        </thead>
+                        <tbody id="target-score-tbody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ===== CUTOFF TRACKER ===== -->
+            <section id="view-cutoffs" class="view">
+                <div class="glass" style="padding:20px;margin-bottom:24px;">
+                    <h3 style="margin-bottom:6px;"><i class="fas fa-trophy neon-orange"></i> IIT/IISc/PSU Cutoffs (GATE Score)</h3>
+                    <p style="color:var(--text-muted);font-size:0.88rem;margin-bottom:16px;">Historical GATE scores required for M.Tech/PhD admissions and PSU recruitment. Use as target benchmarks.</p>
+                    <div id="cutoff-filter" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+                        <button class="type-btn active" onclick="filterCutoffs('all',this)">All</button>
+                        <button class="type-btn" onclick="filterCutoffs('IIT',this)">IITs</button>
+                        <button class="type-btn" onclick="filterCutoffs('IISc',this)">IISc</button>
+                        <button class="type-btn" onclick="filterCutoffs('PSU',this)">PSUs</button>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table style="width:100%;border-collapse:collapse;min-width:600px;">
+                            <thead>
+                                <tr style="border-bottom:2px solid var(--card-border);background:rgba(0,0,0,0.2);">
+                                    <th style="padding:12px;font-weight:600;">Institute / PSU</th>
+                                    <th style="padding:12px;font-weight:600;text-align:center;">Type</th>
+                                    <th style="padding:12px;font-weight:600;text-align:center;">GEN Cutoff</th>
+                                    <th style="padding:12px;font-weight:600;text-align:center;">OBC Cutoff</th>
+                                    <th style="padding:12px;font-weight:600;text-align:center;">SC/ST Cutoff</th>
+                                    <th style="padding:12px;font-weight:600;text-align:center;">Year</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cutoffs-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+</div>
+
+<!-- Edit Name Modal -->
+<div id="name-modal" class="modal-backdrop" style="display:none;">
+    <div class="modal-box glass">
+        <h3 style="margin-bottom:16px;"><i class="fas fa-user-edit neon-blue"></i> Edit Your Name</h3>
+        <input type="text" id="name-input" class="modal-input" placeholder="Your full name">
+        <div style="display:flex;gap:10px;margin-top:14px;">
+            <button onclick="saveName()" class="primary-btn">Save</button>
+            <button onclick="closeNameModal()" class="primary-btn" style="background:rgba(255,255,255,0.1);">Cancel</button>
+        </div>
     </div>
+</div>
 
-    <div id="toast" class="toast">Saved!</div>
-    <script src="script.js"></script>
+<!-- Topic Notes Modal -->
+<div id="notes-modal" class="modal-backdrop" style="display:none;">
+    <div class="modal-box glass" style="min-width:420px;max-width:90vw;">
+        <h3 style="margin-bottom:6px;"><i class="fas fa-sticky-note neon-blue"></i> Notes & Formulas</h3>
+        <p id="notes-modal-topic" style="color:var(--text-muted);font-size:0.85rem;margin-bottom:12px;"></p>
+        <textarea id="notes-modal-content" rows="8" class="modal-input" style="resize:vertical;" placeholder="Write key formulas, shortcuts, notes..."></textarea>
+        <div style="display:flex;gap:10px;margin-top:14px;">
+            <button onclick="saveTopicNote()" class="primary-btn">Save Note</button>
+            <button onclick="closeNotesModal()" class="primary-btn" style="background:rgba(255,255,255,0.1);">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<div id="toast" class="toast">Saved!</div>
+<script src="script.js"></script>
 </body>
-
 </html>
