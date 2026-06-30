@@ -28,10 +28,12 @@
                     id="profile-img"
                     style="border-radius: 50%; width: 60px; margin-bottom: 10px; border: 2px solid var(--accent-blue);">
                 <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
-                    <h4 id="user-name-display" style="font-size: 1.1rem; color: #fff; margin: 0;">Naveenkumar A</h4>
-                    <i class="fas fa-edit" style="color: var(--text-muted); cursor:pointer; font-size: 0.9rem;"
-                        onclick="editName()" title="Edit Name"></i>
+                    <div id="user-name-display" style="font-size: 1.1rem; color: #fff; margin: 0; font-weight: 600;"
+                        contenteditable="true" onblur="saveNameInline(this)">Naveenkumar A</div>
+                    <i class="fas fa-edit" style="color: var(--text-muted); cursor:pointer; font-size: 0.8rem;"
+                        title="Click name to edit"></i>
                 </div>
+                <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 5px;">(Click name to edit)</p>
             </div>
 
             <nav class="nav-menu">
@@ -150,18 +152,25 @@
                         <div
                             style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 15px;">
                             <h3><i class="fas fa-file-pdf neon-orange"></i> Syllabus / Offline PDF Viewer</h3>
-                            <label for="pdf-upload" class="primary-btn"
-                                style="width: auto; cursor: pointer; padding: 8px 16px; margin: 0;"><i
-                                    class="fas fa-upload"></i> Load PDF Document</label>
-                            <input type="file" id="pdf-upload" accept="application/pdf" style="display:none;"
-                                onchange="loadPDF(event)">
+                            <div style="display: flex; gap: 10px;">
+                                <a id="pdf-fallback-link" class="primary-btn"
+                                    style="display:none; text-decoration:none; background:var(--accent-orange);"
+                                    target="_blank"><i class="fas fa-external-link-alt"></i> Open Fullscreen</a>
+                                <label for="pdf-upload" class="primary-btn"
+                                    style="width: auto; cursor: pointer; padding: 8px 16px; margin: 0;"><i
+                                        class="fas fa-upload"></i> Load PDF Document</label>
+                                <input type="file" id="pdf-upload" accept="application/pdf" style="display:none;"
+                                    onchange="loadPDF(event)">
+                            </div>
                         </div>
-                        <iframe id="pdf-frame"
-                            style="width:100%; height: 500px; border:none; display:none; border-radius: 8px; background: white;"></iframe>
+                        <embed id="pdf-frame" type="application/pdf"
+                            style="width:100%; height: 500px; border:none; display:none; border-radius: 8px; background: white;"></embed>
                         <div id="pdf-placeholder"
                             style="text-align:center; color: var(--text-muted); padding: 40px 0; border: 2px dashed rgba(255,255,255,0.1); border-radius: 8px;">
                             <i class="fas fa-file-pdf" style="font-size: 2rem; margin-bottom: 10px; opacity: 0.5;"></i>
                             <p>Upload your GATE ECE Syllabus PDF from your device to view it directly here.</p>
+                            <p style="font-size: 0.8rem; margin-top: 10px;">(If it doesn't display due to browser
+                                security, use the "Open Fullscreen" button that will appear!)</p>
                         </div>
                     </div>
 

@@ -169,10 +169,10 @@ function renderSyllabus() {
                         <input type="checkbox" id="topic_${subj}_${idx}" ${t.done ? 'checked' : ''} 
                                onchange="toggleTopic('${subj}', ${idx})">
                         <label for="topic_${subj}_${idx}">${t.text}</label>
-                        <i class="fas fa-trash" style="color: var(--danger); cursor: pointer; opacity: 0.5; padding: 4px;" onclick="deleteTopic('${subj}', ${idx})" title="Delete Topic" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.5'"></i>
+                        <i class="fas fa-trash" style="color: var(--danger); cursor: pointer; opacity: 0.5; padding: 4px;" onclick="deleteTopic(event, '${subj}', ${idx})" title="Delete Topic" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.5'"></i>
                     </div>
                 `).join('')}
-                <button class="primary-btn" onclick="addTopic('${subj}')" style="margin-top: 10px; width: 100%; font-size: 0.85rem; padding: 6px;"><i class="fas fa-plus"></i> Add Custom Topic</button>
+                <button class="primary-btn" onclick="addTopic(event, '${subj}')" style="margin-top: 10px; width: 100%; font-size: 0.85rem; padding: 6px;"><i class="fas fa-plus"></i> Add Custom Topic</button>
             </div>
         `;
         container.appendChild(card);
@@ -191,8 +191,8 @@ function toggleTopic(subj, idx) {
     showToast();
 }
 
-function addTopic(subj) {
-    event.stopPropagation(); // prevent collapsing accordion
+function addTopic(e, subj) {
+    if (e) e.stopPropagation();
     const text = prompt(`Add a custom topic to ${subj}:`);
     if (text && text.trim() !== '') {
         state.syllabus[subj].push({ text: text.trim(), done: false });
@@ -202,8 +202,8 @@ function addTopic(subj) {
     }
 }
 
-function deleteTopic(subj, idx) {
-    event.stopPropagation(); // prevent collapsing accordion
+function deleteTopic(e, subj, idx) {
+    if (e) e.stopPropagation();
     if (confirm(`Are you sure you want to delete the topic "${state.syllabus[subj][idx].text}"?`)) {
         state.syllabus[subj].splice(idx, 1);
         saveState();
@@ -212,14 +212,15 @@ function deleteTopic(subj, idx) {
     }
 }
 
-function editName() {
-    const newName = prompt("Enter your name:", state.userName);
-    if (newName && newName.trim() !== '') {
-        state.userName = newName.trim();
-        document.getElementById('user-name-display').innerText = state.userName;
+function saveNameInline(el) {
+    const newName = el.innerText.trim();
+    if (newName !== '') {
+        state.userName = newName;
         document.getElementById('profile-img').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(state.userName)}&background=0D8ABC&color=fff`;
         saveState();
-        showToast("Profile name updated!");
+        showToast("Profile name saved!");
+    } else {
+        el.innerText = state.userName; // rollback if empty
     }
 }
 
@@ -259,6 +260,10 @@ function loadPDF(event) {
         document.getElementById('pdf-placeholder').style.display = 'none';
         document.getElementById('pdf-frame').style.display = 'block';
         document.getElementById('pdf-frame').src = fileURL;
+
+        const fallback = document.getElementById('pdf-fallback-link');
+        fallback.style.display = 'inline-block';
+        fallback.href = fileURL;
     } else {
         alert("Please ensure the selected file is a valid PDF.");
     }
@@ -299,8 +304,15 @@ function convertScheduledToCompleted(id) {
         document.getElementById('t-provider').value = test.provider;
         document.getElementById('t-topic').value = test.topic;
         document.getElementById('t-date').value = test.date;
+
+        // Highlight logic
+        const formBox = document.querySelector('.test-form');
+        formBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        formBox.style.boxShadow = "0 0 20px var(--accent-orange)";
         document.getElementById('t-scored').focus();
-        showToast("Enter your marks for the scheduled test.");
+        setTimeout(() => formBox.style.boxShadow = "", 1500);
+
+        showToast("Form populated! Enter your marks and Save.");
     }
 }
 
@@ -315,8 +327,8 @@ function handleTestSubmit(e) {
         date: document.getElementById('t-date').value,
         provider: document.getElementById('t-provider').value,
         topic: document.getElementById('t-topic').value,
-        scored: type === 'completed' ? parseFloat(document.getElementById('t-scored').value) : null,
-        total: type === 'completed' ? parseFloat(document.getElementById('t-total').value) : null,
+        scored: type === 'completed' ? (parseFloat(document.getElementById('t-scored').value) || 0) : null,
+        total: type === 'completed' ? (parseFloat(document.getElementById('t-total').value) || 0) : null,
         analysis: type === 'completed' ? document.getElementById('t-analysis').value : null,
     };
 
